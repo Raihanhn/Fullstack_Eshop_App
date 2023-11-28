@@ -1,6 +1,9 @@
 import React from "react";
 import Container from "../Container";
 import Link from "next/link";
+import { Redressed } from "next/font/google";
+
+const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
 const Navbar = () => {
   return (
@@ -8,7 +11,12 @@ const Navbar = () => {
       <div className="py-4 border-b-[1px] ">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
-            <Link href={"/"}>E-Shop</Link>
+            <Link
+              className={`${redressed.className} font-bold text-2xl`}
+              href={"/"}
+            >
+              E-Shop
+            </Link>
             <div className="hidden md:block">Search</div>
             <div className=" flex items-center gap-8 md:gap-12 ">
               <div className="">CartCount</div>
