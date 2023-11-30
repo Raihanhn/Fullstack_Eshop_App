@@ -16,7 +16,6 @@ const SetColor: React.FC<SetColorProps> = ({
   cartProduct,
   handleColorSelect,
 }) => {
-  console.log(images);
   return (
     <div className="">
       <div className="flex gap-4 items-center ">
