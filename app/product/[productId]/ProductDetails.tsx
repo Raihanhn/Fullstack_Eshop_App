@@ -1,7 +1,7 @@
 "use client";
 import SetColor from "@/app/components/products/SetColor";
 import { Rating } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 interface ProductDetailsProps {
   product: any;
@@ -20,7 +20,7 @@ export type CartProductType = {
 
 export type SelectedImgType = {
   color: string;
-  coloCode: string;
+  colorCode: string;
   image: string;
 };
 
@@ -43,12 +43,15 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const productRating =
     product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /
     product.reviews.length;
-
   const handleColorSelect = useCallback(
-    (value: SelectedImgType) => {},
+    (value: SelectedImgType) => {
+      setCartProduct((prev) => {
+        return { ...prev, selectedImg: value };
+      });
+    },
+    /* eslint-disable */
     [cartProduct.selectedImg]
   );
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
       <div className=""></div>
