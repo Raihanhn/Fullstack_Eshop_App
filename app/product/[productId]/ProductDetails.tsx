@@ -37,8 +37,6 @@ const Horizontal = () => {
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const { handleAddProductToCart, cartProducts } = useCart();
   const [isProductInCart, setIsProductInCart] = useState(false);
-  // const { cartTotalQty } = useCart();
-
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -52,7 +50,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
   const router = useRouter();
 
-  console.log(cartProducts);
+  console.log(handleAddProductToCart);
+
+  // console.log(cartProducts);
 
   useEffect(() => {
     setIsProductInCart(false);
@@ -66,6 +66,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         setIsProductInCart(true);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
 
   const productRating =
