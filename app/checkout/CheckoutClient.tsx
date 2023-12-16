@@ -12,6 +12,9 @@ const CheckoutClient = () => {
 
   const router = useRouter();
 
+  console.log("paymentIntent", paymentIntent);
+  console.log("clientSecret", clientSecret);
+
   useEffect(() => {
     if (cartProducts) {
       setLoading(true);
@@ -34,8 +37,10 @@ const CheckoutClient = () => {
         .then((data) => {
           setClientSecret(data.paymentIntent.client_secret);
           handleSetPaymentIntent(data.paymentIntent.id);
+          console.log(data.paymentIntent.id);
         })
         .catch((error) => {
+          console.log("Error", error);
           setError(true);
           toast.error("Something went wrong");
         });

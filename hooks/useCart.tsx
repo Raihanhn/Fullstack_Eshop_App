@@ -33,7 +33,6 @@ export const CartContextProvider = (props: Props) => {
   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
     null
   );
-
   const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
 
   useEffect(() => {
@@ -168,7 +167,7 @@ export const CartContextProvider = (props: Props) => {
   const handleSetPaymentIntent = useCallback(
     (val: string | null) => {
       setPaymentIntent(val);
-      localStorage.setItem("eShopPaymentIntent", JSON.stringify(value));
+      localStorage.setItem("eShopPaymentIntent", JSON.stringify(val));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [paymentIntent]
