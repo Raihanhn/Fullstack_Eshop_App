@@ -1,14 +1,22 @@
 "use client";
 import { useCart } from "@/hooks/useCart";
+import { Elements } from "@stripe/react-stripe-js";
+import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);
 
 const CheckoutClient = () => {
   const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const router = useRouter();
 
@@ -47,7 +55,31 @@ const CheckoutClient = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts, paymentIntent]);
-  return <>CheckoutClient</>;
+
+  const options: StripeElementsOptions = {
+    clientSecret,
+    appearance: {
+      theme: "stripe",
+      labels: "floating",
+    },
+  };
+
+  const handleSetPaymentSuccess = useCallback((value: boolean) => {
+    setPaymentSuccess(value);
+  }, []);
+
+  return (
+    <div className="w-full ">
+      {clientSecret && cartProducts && (
+        <Elements options={options} stripe={stripePromise}>
+          <CheckoutForm
+            clientSecret={clientSecret}
+            handleSetPaymentSuccess={handleSetPaymentSuccess}
+          />
+        </Elements>
+      )}
+    </div>
+  );
 };
 
 export default CheckoutClient;
