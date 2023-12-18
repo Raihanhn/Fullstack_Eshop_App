@@ -29,7 +29,7 @@ const AdminNav = () => {
             <AdminNavItem
               label="AddProducts"
               icon={MdLibraryAdd}
-              selected={pathname === "/add-products"}
+              selected={pathname === "/admin/add-products"}
             />
           </Link>
           <Link href={"/admin/manage-products"}>
@@ -43,7 +43,7 @@ const AdminNav = () => {
             <AdminNavItem
               label="ManageOrders"
               icon={MdFormatListBulleted}
-              selected={pathname === "/manage-orders"}
+              selected={pathname === "/admin/manage-orders"}
             />
           </Link>
         </div>
