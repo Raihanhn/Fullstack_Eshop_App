@@ -86,7 +86,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
 
     setCartProduct((prev) => {
-      return { ...prev, quantity: ++prev.quantity };
+      return { ...prev, quantity: prev.quantity + 1 };
     });
   }, [cartProduct]);
 
@@ -96,7 +96,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
 
     setCartProduct((prev) => {
-      return { ...prev, quantity: --prev.quantity };
+      if (prev.quantity >= 1) {
+        return { ...prev, quantity: prev.quantity - 1 };
+      }
+      return { ...prev, quantity: prev.quantity };
     });
   }, [cartProduct]);
 
