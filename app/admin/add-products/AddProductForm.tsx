@@ -4,10 +4,24 @@ import Heading from "@/app/components/Heading";
 import CategoryInput from "@/app/components/inputs/CategoryInput";
 import CustomCheckbox from "@/app/components/inputs/CustomCheckbox";
 import Input from "@/app/components/inputs/Input";
+import SelectColor from "@/app/components/inputs/SelectColor";
 import TextArea from "@/app/components/inputs/TextArea";
 import { categories } from "@/app/utils/Categories";
+import { colors } from "@/app/utils/Color";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+
+export type ImageType = {
+  color: string;
+  colorCode: string;
+  image: File | null;
+};
+
+export type UploadedImageType = {
+  color: string;
+  colorCode: string;
+  image: string;
+};
 
 const AddProductForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +111,30 @@ const AddProductForm = () => {
                   icon={item.icon}
                 />
               </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="w-full flex flex-col flex-wrap gap-4">
+        <div className="">
+          <div className="font-bold">
+            Selected the available product colors and upload their images.
+          </div>
+          <div className="text-sm">
+            You must upload an image for each of the color selected otherwise
+            your color selected will be ignored.
+          </div>
+        </div>
+        <div className="grid-cols-2 gap-3">
+          {colors.map((item, index) => {
+            return (
+              <SelectColor
+                key={index}
+                item={item}
+                addImageToState={() => {}}
+                removeImageFromState={() => {}}
+                isProductCreated={false}
+              />
             );
           })}
         </div>
