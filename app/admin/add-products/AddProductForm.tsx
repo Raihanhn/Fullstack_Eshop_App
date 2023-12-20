@@ -8,8 +8,9 @@ import SelectColor from "@/app/components/inputs/SelectColor";
 import TextArea from "@/app/components/inputs/TextArea";
 import { categories } from "@/app/utils/Categories";
 import { colors } from "@/app/utils/Color";
-import { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { useCallback, useEffect, useState } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import Button from "../../components/Button";
 
 export type ImageType = {
   color: string;
@@ -25,6 +26,9 @@ export type UploadedImageType = {
 
 const AddProductForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [images, setImages] = useState<ImageType[] | null>();
+  const [isProductCreated, setIsProductCreated] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -44,6 +48,24 @@ const AddProductForm = () => {
     },
   });
 
+  useEffect(() => {
+    setCustomValue("images", images);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images]);
+
+  useEffect(() => {
+    if (isProductCreated) {
+      reset();
+      setImages(null);
+      setIsProductCreated(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isProductCreated]);
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log("Prodcut Data", data);
+  };
+
   const category = watch("category");
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -52,6 +74,28 @@ const AddProductForm = () => {
       shouldTouch: true,
     });
   };
+
+  const addImageToState = useCallback((value: ImageType) => {
+    setImages((prev) => {
+      if (!prev) {
+        return [value];
+      }
+
+      return [...prev, value];
+    });
+  }, []);
+  const removeImageFromState = useCallback((value: ImageType) => {
+    setImages((prev) => {
+      if (prev) {
+        const filteredImages = prev.filter(
+          (item) => item.color === value.color
+        );
+        return filteredImages;
+      }
+
+      return prev;
+    });
+  }, []);
 
   return (
     <>
@@ -125,20 +169,24 @@ const AddProductForm = () => {
             your color selected will be ignored.
           </div>
         </div>
-        <div className="grid-cols-2 gap-3">
+        <div className=" grid grid-cols-2 gap-3">
           {colors.map((item, index) => {
             return (
               <SelectColor
                 key={index}
                 item={item}
-                addImageToState={() => {}}
-                removeImageFromState={() => {}}
-                isProductCreated={false}
+                addImageToState={addImageToState}
+                removeImageFromState={removeImageFromState}
+                isProductCreated={isProductCreated}
               />
             );
           })}
         </div>
       </div>
+      <Button
+        label={isLoading ? "Loading..." : "Add Product"}
+        onClick={handleSubmit(onSubmit)}
+      />
     </>
   );
 };
