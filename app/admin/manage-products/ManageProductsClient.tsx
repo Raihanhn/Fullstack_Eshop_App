@@ -57,7 +57,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
     },
     {
       field: "price",
-      headerName: "Price(USD",
+      headerName: "Price(USD)",
       width: 100,
       renderCell: (params) => {
         return (
@@ -112,7 +112,12 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
                 handleDelete(params.row.id, params.row.images);
               }}
             />
-            <ActionBtn icon={MdRemoveRedEye} onClick={() => {}} />
+            <ActionBtn
+              icon={MdRemoveRedEye}
+              onClick={() => {
+                router.push(`product/${params.row.id}`);
+              }}
+            />
           </div>
         );
       },
