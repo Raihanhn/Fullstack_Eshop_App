@@ -1,7 +1,25 @@
+import Container from "@/app/components/Container";
 import React from "react";
+import ManageProductsClient from "./ManageProductsClient";
+import getProducts from "@/actions/getProduct";
+import { getCurrentUser } from "@/actions/getCurrentUser";
+import NullData from "@/app/components/NullData";
 
-const ManageProducts = () => {
-  return <div>ManageProducts</div>;
+const ManageProducts = async () => {
+  const currentUser = await getCurrentUser();
+  const products = await getProducts({ category: null });
+
+  if (!currentUser || currentUser.role != "ADMIN") {
+    return <NullData title="Oops! Access denied" />;
+  }
+
+  return (
+    <div className="pt-8">
+      <Container>
+        <ManageProductsClient products={products} />
+      </Container>
+    </div>
+  );
 };
 
 export default ManageProducts;
