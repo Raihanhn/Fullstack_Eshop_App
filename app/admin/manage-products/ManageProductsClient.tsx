@@ -2,6 +2,9 @@
 import { Product } from "@prisma/client";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { formatPrice } from "@/app/utils/formatPrice";
+import Heading from "@/app/components/Heading";
+import Status from "@/app/components/products/Status";
+import { MdClose, MdDone } from "react-icons/md";
 
 interface ManageProductsClientProps {
   products: Product[];
@@ -56,7 +59,21 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
       renderCell: (params) => {
         return (
           <div>
-            {params.row.inStock === true ? "in stock" : "out of stock"}{" "}
+            {params.row.inStock === true ? (
+              <Status
+                text="in stock"
+                icon={MdDone}
+                bg="bg-teal-200"
+                color="text-teal-700"
+              />
+            ) : (
+              <Status
+                text="out of stock"
+                icon={MdClose}
+                bg="bg-rose-200"
+                color="text-rose-700"
+              />
+            )}{" "}
           </div>
         );
       },
@@ -72,18 +89,23 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   ];
 
   return (
-    <div>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
+    <div className="max-w-[1150px] m-auto text-xl">
+      <div className="mb-4 mt-8">
+        <Heading title="Manage Products" center />
+      </div>
+      <div style={{ height: 600, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[9, 20]}
+          checkboxSelection
+        />
+      </div>
     </div>
   );
 };
