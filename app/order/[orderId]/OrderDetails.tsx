@@ -4,8 +4,10 @@ import Heading from "@/app/components/Heading";
 import Status from "@/app/components/products/Status";
 import { formatPrice } from "@/app/utils/formatPrice";
 import { Order } from "@prisma/client";
+import moment from "moment";
 import { useRouter } from "next/navigation";
 import { MdAccessTimeFilled, MdDeliveryDining, MdDone } from "react-icons/md";
+import OrderItem from "./OrderItem";
 
 interface OrderDetailsProps {
   order: Order;
@@ -73,6 +75,20 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
             <></>
           )}
         </div>
+      </div>
+      <div className="">Date: {moment(order.createDate).fromNow()} </div>
+      <div className="">
+        <h2 className="font-semibold mt-4 mb-2">Products ordered</h2>
+        <div className="grid grid-cols-5 text-xs gap-4 pb-2 items-center">
+          <div className="col-span-2 justify-self-start">PRODUCT</div>
+          <div className=" justify-self-center">PRICE</div>
+          <div className=" justify-self-center">QTY</div>
+          <div className=" justify-self-start">TOTAL</div>
+        </div>
+        {order.products &&
+          order.products.map((item) => {
+            return <OrderItem key={item.id} item={item}></OrderItem>;
+          })}
       </div>
     </div>
   );

@@ -17,9 +17,9 @@ const Order = async ({ params }: { params: IPrams }) => {
     <div className="p-8">
       <Container>
         <OrderDetails order={order} />
-        <div className="flex flex-col mt-20 gap-4 ">
+        {/* <div className="flex flex-col mt-20 gap-4 ">
           <div className="">Add Rating </div>
-        </div>
+        </div> */}
       </Container>
     </div>
   );
