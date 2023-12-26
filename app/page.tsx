@@ -4,8 +4,6 @@ import getProducts, { IProductParams } from "@/actions/getProduct";
 import Container from "./components/Container";
 import HomeBanner from "./components/nav/HomeBanner";
 import ProductCard from "./components/products/ProductCard";
-import { products } from "./utils/products";
-import { truncateText } from "./utils/truncateText";
 import NullData from "./components/NullData";
 
 interface HomeProps {

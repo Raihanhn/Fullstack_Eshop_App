@@ -123,11 +123,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <div className="text-justify">{product.description} </div>
         <Horizontal />
         <div className="font-semibold ">
-          <span className="">CATEGORY:</span>
+          <span className="">CATEGORY: </span>
           {product.category}
         </div>
         <div className="font-semibold ">
-          <span className="">BRAND:</span>
+          <span className="">BRAND: </span>
           {product.brand}
         </div>
         <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
