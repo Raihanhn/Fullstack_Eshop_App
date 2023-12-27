@@ -1,15 +1,15 @@
 "use client";
 
-// import { Product, User } from "@prisma/client";
+import { Order, Product, User } from "@prisma/client/index";
 import { useEffect, useState } from "react";
 import Heading from "../components/Heading";
 import { formatPrice } from "../utils/formatPrice";
 import { formatNumber } from "../utils/formatNumber";
 
 interface SummaryProps {
-  // orders: Order[];
-  // products: Product[];
-  // users: User[];
+  orders: Order[];
+  products: Product[];
+  users: User[];
 }
 
 type SummaryDataType = {
@@ -19,7 +19,7 @@ type SummaryDataType = {
   };
 };
 
-const Summary: React.FC<SummaryProps> = ({}) => {
+const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
   const [summaryData, setSummaryData] = useState<SummaryDataType>({
     sale: {
       label: "Total Sale",
@@ -47,34 +47,34 @@ const Summary: React.FC<SummaryProps> = ({}) => {
     },
   });
 
-  // useEffect(() => {
-  //   setSummaryData((prev) => {
-  //     let tempData = { ...prev };
+  useEffect(() => {
+    setSummaryData((prev) => {
+      let tempData = { ...prev };
 
-  //     const totalSale = orders.reduce((acc, item) => {
-  //       if (item.status === "complete") {
-  //         return acc + item.amount;
-  //       } else return acc;
-  //     }, 0);
+      const totalSale = orders.reduce((acc, item) => {
+        if (item.status === "complete") {
+          return acc + item.amount;
+        } else return acc;
+      }, 0);
 
-  //     const paidOrders = orders.filter((order) => {
-  //       return order.status === "complete";
-  //     });
+      const paidOrders = orders.filter((order) => {
+        return order.status === "complete";
+      });
 
-  //     const unpaidOrders = orders.filter((order) => {
-  //       return order.status === "pending";
-  //     });
+      const unpaidOrders = orders.filter((order) => {
+        return order.status === "pending";
+      });
 
-  //     tempData.sale.digit = totalSale;
-  //     tempData.orders.digit = orders.length;
-  //     tempData.paidOrders.digit = paidOrders.length;
-  //     tempData.unpaidOrders.digit = unpaidOrders.length;
-  //     tempData.products.digit = products.length;
-  //     tempData.users.digit = users.length;
+      tempData.sale.digit = totalSale;
+      tempData.orders.digit = orders.length;
+      tempData.paidOrders.digit = paidOrders.length;
+      tempData.unpaidOrders.digit = unpaidOrders.length;
+      tempData.products.digit = products.length;
+      tempData.users.digit = users.length;
 
-  //     return tempData;
-  //   });
-  // }, [orders, products, users]);
+      return tempData;
+    });
+  }, [orders, products, users]);
 
   const summaryKeys = Object.keys(summaryData);
 
