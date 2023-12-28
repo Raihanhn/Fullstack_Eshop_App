@@ -63,7 +63,7 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
         reset();
       })
       .catch((error) => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong!");
       })
       .finally(() => {
         setIsLoading(false);
